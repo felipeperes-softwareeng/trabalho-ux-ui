@@ -1,0 +1,132 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Tokens do tema. Valores em "R G B" para aceitar transparência no Tailwind. */
+:root,
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --ink-950: 6 6 6; --ink-900: 11 11 15; --ink-800: 13 13 18; --ink-700: 19 19 26; --ink-600: 26 26 35;
+  --text: 245 245 247; --text-muted: 169 175 191; --text-subtle: 141 147 165;
+  --line: 255 255 255;
+  --gold: 245 158 11; --gold-bright: 251 191 36; --gold-deep: 217 119 6; --gold-soft: 253 230 138;
+  --ok: 52 211 153; --info: 96 165 250; --violet: 167 139 250; --danger: 251 113 133;
+  --gold-text-gradient: linear-gradient(135deg, #fde68a 0%, #fbbf24 45%, #d97706 100%);
+  --glass-bg: linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,.02));
+  --glass-border: rgba(255,255,255,.08);
+  --shadow-gold: 0 20px 80px -20px rgba(245,158,11,.45), 0 0 60px -10px rgba(217,119,6,.30);
+  --shadow-cinema: 0 30px 120px -30px rgba(0,0,0,.8);
+  --shadow-card: 0 1px 0 rgba(255,255,255,.04) inset, 0 18px 40px -24px rgba(0,0,0,.9);
+  --page-bg:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(245,158,11,.12), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 90% 10%, rgba(217,119,6,.08), transparent 70%),
+    linear-gradient(180deg, #060606 0%, #0b0b0f 100%);
+  --scroll-track: #0b0b0f; --scroll-thumb: #2a2a35;
+  --watermark-opacity: .9;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+  --ink-950: 244 245 249; --ink-900: 255 255 255; --ink-800: 255 255 255; --ink-700: 241 242 247; --ink-600: 232 234 241;
+  --text: 20 20 28; --text-muted: 75 81 99; --text-subtle: 99 106 125;
+  --line: 20 20 30;
+  /* Dourados escurecidos: o #f59e0b original só tem ~2:1 sobre branco. */
+  --gold: 161 72 8; --gold-bright: 133 58 10; --gold-deep: 194 97 10; --gold-soft: 254 243 199;
+  --ok: 6 95 70; --info: 29 78 216; --violet: 109 40 217; --danger: 190 18 60;
+  --gold-text-gradient: linear-gradient(135deg, #92400e 0%, #b45309 50%, #c2610a 100%);
+  --glass-bg: linear-gradient(180deg, rgba(255,255,255,.85), rgba(255,255,255,.6));
+  --glass-border: rgba(20,20,30,.1);
+  --shadow-gold: 0 14px 40px -16px rgba(217,119,6,.55), 0 0 0 1px rgba(217,119,6,.12);
+  --shadow-cinema: 0 24px 70px -28px rgba(20,20,30,.35);
+  --shadow-card: 0 1px 2px rgba(20,20,30,.05), 0 12px 30px -20px rgba(20,20,30,.25);
+  --page-bg:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(245,158,11,.14), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 90% 10%, rgba(217,119,6,.07), transparent 70%),
+    linear-gradient(180deg, #f6f7fb 0%, #eceef5 100%);
+  --scroll-track: #eceef5; --scroll-thumb: #c3c7d4;
+  --watermark-opacity: .85;
+}
+
+:root {
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  min-width: 320px;
+  color: rgb(var(--text));
+  background-color: rgb(var(--ink-950));
+  background-image: var(--page-bg);
+  background-attachment: fixed;
+  transition: background-color .3s ease, color .3s ease;
+}
+
+button, input, select { font: inherit; color: inherit; }
+::selection { background: rgba(245,158,11,.35); color: inherit; }
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--scroll-track); }
+::-webkit-scrollbar-thumb { background: var(--scroll-thumb); border-radius: 999px; border: 2px solid var(--scroll-track); }
+::-webkit-scrollbar-thumb:hover { background: #d97706; }
+
+@layer components {
+  /* Marca d'água do cartão do semestre: foto viva, com um degradê de proteção só atrás do texto.
+     Em telas estreitas e médias a foto aparece embaixo; em telas largas (1280 px ou mais), à direita. */
+  .watermark { opacity: var(--watermark-opacity); object-position: 50% 62%; }
+  .watermark-scrim {
+    background: linear-gradient(180deg, rgb(var(--ink-800)) 0%, rgb(var(--ink-800)) 62%, rgb(var(--ink-800) / .55) 76%, rgb(var(--ink-800) / .08) 100%);
+  }
+  @media (min-width: 1280px) {
+    .watermark-scrim {
+      background: linear-gradient(90deg, rgb(var(--ink-800)) 0%, rgb(var(--ink-800)) 58%, rgb(var(--ink-800) / .8) 66%, rgb(var(--ink-800) / .2) 80%, rgb(var(--ink-800) / 0) 94%);
+    }
+  }
+  .glass {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+  .card {
+    @apply rounded-2xl border border-line/10 bg-ink-800/80 shadow-card;
+  }
+  .card-hover {
+    @apply transition duration-300 hover:-translate-y-0.5 hover:border-gold/40 hover:shadow-gold;
+  }
+  .gold-text {
+    background: var(--gold-text-gradient);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+    padding-bottom: .12em;
+    padding-right: .1em;
+  }
+  .eyebrow {
+    @apply text-xs font-bold uppercase tracking-[.18em] text-gold;
+  }
+  .btn-gold {
+    @apply inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl bg-gold-gradient px-5 py-2.5 text-sm font-extrabold text-on-gold shadow-gold transition duration-200 hover:-translate-y-0.5 hover:brightness-110 active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none;
+  }
+  .btn-ghost {
+    @apply inline-flex min-h-[44px] items-center justify-center gap-2 rounded-xl border border-line/15 bg-line/[.04] px-4 py-2.5 text-sm font-semibold text-text transition hover:border-gold/50 hover:bg-gold/10;
+  }
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-ink-900;
+  }
+  .input {
+    @apply focus-ring min-h-[44px] w-full rounded-xl border border-line/10 bg-ink-900 px-3 py-2.5 text-sm font-medium text-text placeholder:text-text-subtle transition hover:border-line/25;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-bold;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
