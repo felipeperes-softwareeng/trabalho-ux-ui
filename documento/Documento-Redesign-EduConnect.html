@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Redesign EduConnect | Análise e justificativas</title>
+<style>
+  :root { --ink:#0d0d12; --text:#1c1c24; --muted:#5b6070; --gold:#b45309; --gold-soft:#fef3c7; --line:#e4e4ea; --ok:#047857; --bad:#b91c1c; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: Inter, "Segoe UI", system-ui, sans-serif; color:var(--text); line-height:1.65; font-size:15px; background:#fff; }
+  main { max-width: 860px; margin: 0 auto; padding: 48px 32px 72px; }
+  .capa { background: var(--ink); color:#f5f5f7; border-radius:20px; padding:44px 40px; margin-bottom:36px; position:relative; overflow:hidden; }
+  .capa:after { content:""; position:absolute; right:-80px; top:-100px; width:320px; height:320px; border-radius:50%; background:radial-gradient(circle, rgba(245,158,11,.45), transparent 70%); }
+  .capa small { letter-spacing:.18em; text-transform:uppercase; font-weight:700; color:#fbbf24; font-size:12px; position:relative; }
+  .capa h1 { font-size:38px; line-height:1.1; margin:12px 0 10px; letter-spacing:-.02em; position:relative; }
+  .capa h1 em { font-style:normal; background:linear-gradient(135deg,#fde68a,#fbbf24 45%,#d97706); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .capa p { margin:0; color:#c9ccd6; position:relative; }
+  .meta { display:flex; flex-wrap:wrap; gap:8px 28px; margin-top:22px; font-size:13px; color:#c9ccd6; position:relative; }
+  .meta b { color:#fff; }
+  h2 { font-size:24px; margin:44px 0 14px; padding-top:18px; border-top:2px solid var(--gold-soft); letter-spacing:-.01em; break-after:avoid; }
+  h2 span { color:var(--gold); font-weight:800; margin-right:8px; }
+  h3 { font-size:17px; margin:26px 0 8px; break-after:avoid; }
+  p { margin:0 0 12px; }
+  ul, ol { padding-left: 22px; margin: 0 0 14px; }
+  li { margin-bottom: 6px; }
+  code { background:#f3f4f8; border:1px solid var(--line); padding:1px 6px; border-radius:6px; font-size:13px; }
+  table { width:100%; border-collapse:collapse; margin:12px 0 20px; font-size:13.5px; }
+  th, td { text-align:left; border:1px solid var(--line); padding:9px 11px; vertical-align:top; }
+  th { background:#f7f7fa; font-weight:700; }
+  .bad { color:var(--bad); font-weight:700; } .good { color:var(--ok); font-weight:700; }
+  .callout { background:var(--gold-soft); border-left:4px solid var(--gold); padding:14px 18px; border-radius:8px; margin:16px 0; }
+  .frase { background:#fafafc; border:1px solid var(--line); border-radius:12px; padding:14px 18px; margin:0 0 12px; break-inside:avoid; }
+  .frase b { color:var(--gold); }
+  figure { margin:16px 0 22px; break-inside:avoid; }
+  figure img { width:100%; border-radius:12px; border:1px solid var(--line); display:block; }
+  figcaption { font-size:12.5px; color:var(--muted); margin-top:6px; }
+  .par { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .par.mob { grid-template-columns: repeat(3, 1fr); max-width: 640px; }
+  .tag { display:inline-block; font-size:11px; font-weight:800; letter-spacing:.1em; text-transform:uppercase; padding:3px 9px; border-radius:999px; margin-bottom:6px; }
+  .tag.a { background:#fee2e2; color:var(--bad); } .tag.d { background:#d1fae5; color:var(--ok); }
+  .swatches { display:flex; flex-wrap:wrap; gap:10px; margin:12px 0 18px; }
+  .sw { width:118px; border:1px solid var(--line); border-radius:12px; overflow:hidden; font-size:12px; }
+  .sw i { display:block; height:44px; } .sw span { display:block; padding:6px 8px; color:var(--muted); }
+  footer { margin-top:48px; padding-top:16px; border-top:1px solid var(--line); font-size:12.5px; color:var(--muted); }
+  @media print { main { padding: 0; } .capa { print-color-adjust: exact; -webkit-print-color-adjust: exact; } .sw i, .tag { print-color-adjust: exact; -webkit-print-color-adjust: exact; } h2 { break-after: avoid; } }
+</style>
+</head>
+<body>
+<main>
+
+<header class="capa">
+  <small>Atividade de Redesign · UX e UI</small>
+  <h1>Redesign do <em>EduConnect</em></h1>
+  <p>Do site original analisado, aos problemas identificados, até a nova proposta de interface em um visual premium.</p>
+  <div class="meta">
+    <span><b>Disciplina:</b> Design de Experiência do Usuário (UX) e Interfaces (UI)</span>
+    <span><b>Aluno(a):</b> Felipe Peres D Oliveira</span>
+    <span><b>Entrega:</b> código-fonte (<code>educonnect-premium</code>) e este documento</span>
+  </div>
+</header>
+
+<h2><span>1</span>Resumo</h2>
+<p>O EduConnect é um portal acadêmico com cinco telas: Dashboard, Notas, Disciplinas, Matrícula e Perfil. O visual original tinha uma base boa de organização, mas apresentava falhas de contraste, de comportamento no celular e de fluxo, além de uma identidade visual sem personalidade.</p>
+<p>O redesign reformulou toda a interface visual, aplicando um <strong>visual premium</strong>: fundo escuro profundo, dourado como cor de ação, vidro e brilho, hierarquia tipográfica forte e componentes sofisticados. As cinco telas e todas as funcionalidades foram mantidas, e foram corrigidos os problemas de usabilidade encontrados no original.</p>
+
+<table>
+  <tr><th>Item</th><th>Original</th><th>Redesign</th></tr>
+  <tr><td>Contraste do texto secundário</td><td class="bad">2,56 : 1 (reprovado)</td><td class="good">6,32 : 1 a 8,83 : 1 (aprovado)</td></tr>
+  <tr><td>Telas na navegação do celular</td><td class="bad">4 de 5 (Perfil sumia)</td><td class="good">5 de 5</td></tr>
+  <tr><td>Matrícula</td><td class="bad">Aviso de sucesso sem confirmação</td><td class="good">Revisão, limite de créditos e confirmação</td></tr>
+  <tr><td>Formulário do perfil</td><td class="bad">Só o e-mail era checado</td><td class="good">Validação com mensagem por campo</td></tr>
+  <tr><td>Componentes e código</td><td class="bad">1 arquivo com 441 linhas</td><td class="good">Componentes, páginas e dados separados</td></tr>
+  <tr><td><code>npm run build</code></td><td class="bad">Falhava (faltava <code>@types/react</code>)</td><td class="good">Passa do zero, sem erros</td></tr>
+</table>
+
+<h2><span>2</span>Análise do site original</h2>
+<p>O site foi aberto e executado no navegador em 1440 px e 390 px, e o código foi lido por inteiro. Os problemas abaixo foram confirmados nesses dois momentos.</p>
+
+<div class="par">
+  <figure><span class="tag a">Antes</span><img src="img/antes-desktop-dashboard.png" alt="Dashboard original no desktop"><figcaption>Dashboard original (1440 px): menu com botão de fechar visível no desktop.</figcaption></figure>
+  <figure><span class="tag d">Depois</span><img src="img/depois-desktop-dashboard.png" alt="Dashboard redesenhado no desktop"><figcaption>Dashboard redesenhado (1440 px).</figcaption></figure>
+</div>
+
+<h3>Problemas identificados</h3>
+<table>
+  <tr><th>#</th><th>Problema</th><th>Como foi confirmado</th><th>Impacto</th></tr>
+  <tr><td>1</td><td><strong>Contraste baixo.</strong> Textos auxiliares em cinza claro sobre fundo branco.</td><td>Cor <code>slate-400</code> (#94a3b8) sobre #fff = 2,56 : 1. O mínimo da WCAG é 4,5 : 1.</td><td>Difícil ler legendas, códigos e detalhes, principalmente ao ar livre.</td></tr>
+  <tr><td>2</td><td><strong>Textos minúsculos.</strong> 11 ocorrências de 9, 10 e 11 px (selos, datas, mensagens de apoio).</td><td>Busca no código por <code>text-[9px]</code>, <code>[10px]</code> e <code>[11px]</code>.</td><td>Informação importante (como o prazo urgente) quase ilegível.</td></tr>
+  <tr><td>3</td><td><strong>Navegação do celular incompleta.</strong> A barra inferior mostra só 4 das 5 telas; o Perfil some.</td><td>Visto na captura de 390 px; no código, <code>navItems.slice(0, 4)</code>.</td><td>O aluno não alcança o Perfil sem abrir o menu lateral.</td></tr>
+  <tr><td>4</td><td><strong>Botão de fechar no desktop.</strong> O "X" do menu lateral aparece em telas grandes, onde o menu é fixo.</td><td>Visto na captura de 1440 px.</td><td>Controle sem função, que confunde.</td></tr>
+  <tr><td>5</td><td><strong>Matrícula sem confirmação.</strong> "Continuar matrícula" mostra um aviso de sucesso na hora, sem revisão. Não há limite de créditos nem alerta de choque de horário.</td><td>Código: <code>submit()</code> chama só o aviso de sucesso.</td><td>Risco de o aluno achar que concluiu algo que não foi revisado.</td></tr>
+  <tr><td>6</td><td><strong>Formulário do perfil com validação mínima.</strong> Só o e-mail tinha a checagem nativa do navegador; nome, telefone e cidade aceitavam qualquer valor, inclusive vazio. O botão de salvar ficava sempre ativo.</td><td>Código: <code>submit()</code> não valida; só <code>type="email"</code>.</td><td>Dados incorretos e nenhuma mensagem de erro clara.</td></tr>
+  <tr><td>7</td><td><strong>Dados inconsistentes.</strong> A média aparecia como 8,7, mas as seis notas dão 8,5. A tela Disciplinas listava 5 matérias, enquanto o painel dizia 6. Os eventos estavam em setembro, fora do semestre 2026.2.</td><td>Cálculo: (9,4 + 8,7 + 8,2 + 9,1 + 7,6 + 8,0) / 6 = 8,5. Comparação entre telas.</td><td>Perda de confiança nas informações do portal.</td></tr>
+  <tr><td>8</td><td><strong>Identidade visual sem personalidade.</strong> Um fundo de documento em vermelho vivo (#f32105) e uma barra de rolagem azul (#046ff1) fogem da paleta índigo do restante.</td><td>Leitura do <code>index.css</code> e captura de 390 px, onde aparece uma faixa vermelha e azul na borda direita (fundo do documento e barra de rolagem).</td><td>Mistura de cores sem critério e aparência genérica.</td></tr>
+  <tr><td>9</td><td><strong>Painel de notificações com largura fixa</strong> de 320 px e sem estado de "lida".</td><td>Código: <code>w-[320px]</code>; o botão "Marcar lidas" só fechava o painel.</td><td>Corte em telas pequenas e ação sem efeito.</td></tr>
+  <tr><td>10</td><td><strong>Acessibilidade e código.</strong> Ícones decorativos não ocultados do leitor de tela, anel de foco muito claro (índigo 100), sem "pular para o conteúdo", tudo em um arquivo, e <code>npm run build</code> falhava por falta de <code>@types/react</code>.</td><td>Leitura do código e execução do build.</td><td>Difícil de manter e de usar com teclado ou leitor de tela.</td></tr>
+</table>
+
+<h2><span>3</span>Proposta: visual premium</h2>
+<p>A régua da proposta é "parece caro, é fácil de entender e foi muito bem organizado": hierarquia clara, beleza e leitura perfeita na mesma tela. O redesign usa fundo escuro profundo ("ink"), dourado como cor de ação, vidro, brilho e título em ouro polido.</p>
+
+<h3>Paleta (com função definida)</h3>
+<div class="swatches">
+  <div class="sw"><i style="background:#060606"></i><span><b>Ink 950</b> #060606<br>fundo da página</span></div>
+  <div class="sw"><i style="background:#0d0d12"></i><span><b>Ink 800</b> #0d0d12<br>cards</span></div>
+  <div class="sw"><i style="background:#f59e0b"></i><span><b>Dourado</b> #f59e0b<br>ação principal</span></div>
+  <div class="sw"><i style="background:#fbbf24"></i><span><b>Dourado claro</b> #fbbf24<br>destaque</span></div>
+  <div class="sw"><i style="background:#d97706"></i><span><b>Dourado fundo</b> #d97706<br>gradiente</span></div>
+  <div class="sw"><i style="background:#34d399"></i><span><b>Sucesso</b> #34d399<br>aprovado</span></div>
+  <div class="sw"><i style="background:#fb7185"></i><span><b>Alerta</b> #fb7185<br>urgência e erro</span></div>
+  <div class="sw"><i style="background:#a9afbf"></i><span><b>Texto auxiliar</b> #a9afbf<br>8,83 : 1</span></div>
+</div>
+
+<h3>Tipografia e espaçamento</h3>
+<ul>
+  <li><strong>Fonte:</strong> Inter (a mesma do original), em pesos 400 a 800.</li>
+  <li><strong>Escala:</strong> títulos de página de 30 a 36 px, títulos de seção de 20 px, texto corrente de 16 px, apoio de 14 px. O menor texto de leitura tem 14 px; só rótulos curtos (navegação inferior, selos, cabeçalhos de tabela e contador do sino) usam 10 a 12 px.</li>
+  <li><strong>Espaçamento:</strong> escala de 4, 8, 12, 16, 24, 32 e 48 px, com cards de cantos arredondados (16 px).</li>
+  <li><strong>Destaque:</strong> o gradiente dourado é reservado ao que o aluno precisa notar (botão principal, nome no cumprimento e item ativo do menu).</li>
+</ul>
+
+<h3>Modo claro e modo escuro</h3>
+<p>O cabeçalho tem um botão para alternar entre os dois modos (ícone de sol ou lua, com o texto "Modo claro" ou "Modo escuro" a partir de telas médias). O tema padrão é o escuro, que é a identidade visual do redesign; a escolha fica salva no navegador, e um pequeno script no <code>index.html</code> aplica o tema salvo antes da primeira pintura, para a página não piscar no tema errado.</p>
+<p>As cores de texto e os dourados foram adaptados para cada modo, e não apenas invertidos. No modo claro, o dourado <code>#f59e0b</code> teria só cerca de 2 : 1 sobre branco; por isso os textos dourados usam tons mais escuros (<code>#a14808</code> e <code>#853a0a</code>), enquanto os botões mantêm o dourado vivo com texto escuro. Os verdes, azuis, rosas e roxos de apoio também ficam mais escuros no claro.</p>
+<table>
+  <tr><th>Tom de texto</th><th>Modo escuro</th><th>Modo claro</th></tr>
+  <tr><td>Principal</td><td>17,80 : 1</td><td>16,81 a 18,32 : 1</td></tr>
+  <tr><td>Auxiliar</td><td>8,83 : 1</td><td>7,26 a 7,91 : 1</td></tr>
+  <tr><td>Apoio (mais discreto)</td><td>6,32 : 1</td><td>4,96 a 5,40 : 1</td></tr>
+  <tr><td>Dourado (links e rótulos)</td><td>9,03 : 1</td><td>5,59 a 6,09 : 1</td></tr>
+  <tr><td>Selo de sucesso (verde)</td><td>10,08 : 1</td><td>6,04 : 1</td></tr>
+  <tr><td>Texto do botão dourado</td><td>5,75 a 10,97 : 1</td><td>5,75 a 10,97 : 1</td></tr>
+</table>
+<div class="par">
+  <figure><span class="tag d">Modo claro</span><img src="img/depois-claro-dashboard.png" alt="Dashboard no modo claro"><figcaption>Dashboard no modo claro (1440 px).</figcaption></figure>
+  <figure><span class="tag d">Modo claro</span><img src="img/depois-claro-perfil.png" alt="Perfil no modo claro com erro de validação"><figcaption>Perfil no modo claro, com a mensagem de erro legível.</figcaption></figure>
+</div>
+<div class="par mob">
+  <figure><span class="tag d">Escuro</span><img src="img/depois-escuro-mobile.png" alt="Celular no modo escuro"><figcaption>Celular, modo escuro.</figcaption></figure>
+  <figure><span class="tag d">Claro</span><img src="img/depois-claro-mobile.png" alt="Celular no modo claro"><figcaption>Celular, modo claro.</figcaption></figure>
+</div>
+
+<h3>Logo e marca d'água</h3>
+<p>Foi criada uma <strong>logo 3D</strong>: um capelo de formatura dourado, com volume (faces laterais, base e borla), sobre uma placa escura com aro metálico. Ela aparece no menu lateral e como ícone da aba do navegador (<code>favicon.svg</code>), e vem em duas versões na pasta <code>logo</code> (ícone e horizontal).</p>
+<p>No cartão "Semestre 2026.2" do Dashboard, a <strong>foto do campus</strong> é a marca d'água de fundo. Um degradê protege somente a área do texto: em telas largas a foto fica à direita e, nas demais, em uma faixa inferior. O contraste do texto contra o pior ponto do fundo foi medido em 8 larguras e nos dois temas, e ficou em 5,14 : 1 ou mais.</p>
+<div class="par">
+  <figure><img src="img/logo-horizontal.png" alt="Logo EduConnect horizontal"><figcaption>Logo, versão horizontal.</figcaption></figure>
+  <figure><img src="img/logo-icone.png" alt="Ícone da logo" style="max-width:220px"><figcaption>Ícone (também usado como favicon).</figcaption></figure>
+</div>
+
+<h2><span>4</span>Mudanças justificadas</h2>
+<p>Cada mudança importante responde à pergunta: "Eu alterei __ porque no site original __. Com a nova proposta, o usuário consegue __."</p>
+
+<div class="frase"><b>Cores e contraste.</b> Eu alterei a paleta para fundo escuro com dourado porque, no site original, os textos auxiliares tinham 2,56 : 1 de contraste e as cores não seguiam uma lógica. Com a nova proposta, o usuário consegue ler todo o conteúdo com contraste mínimo de 6,32 : 1 e entende cada cor pela sua função (dourado = ação, verde = aprovado, rosa = urgência).</div>
+<div class="frase"><b>Modo claro e escuro.</b> Eu criei um botão de alternância de tema, com as cores de texto adaptadas a cada modo, porque, no site original, só existia um visual fixo, com cinza claro de baixo contraste. Com a nova proposta, o usuário consegue escolher o modo que lê melhor (por exemplo, o claro ao ar livre e o escuro à noite), com contraste adequado nos dois, e a escolha é lembrada nas próximas visitas.</div>
+<div class="frase"><b>Tamanho dos textos.</b> Eu aumentei os textos de apoio para 14 px ou mais porque, no site original, havia 11 ocorrências de 9 a 11 px. Com a nova proposta, o usuário consegue ler datas, códigos e avisos sem esforço.</div>
+<div class="frase"><b>Navegação do celular.</b> Eu coloquei as 5 telas na barra inferior, com alvos de toque de 56 px, porque, no site original, o Perfil ficava escondido. Com a nova proposta, o usuário consegue ir a qualquer tela com um toque.</div>
+<div class="frase"><b>Menu lateral.</b> Eu escondi o botão de fechar no desktop e mantive o menu fixo, com indicador dourado na página atual, porque, no site original, o "X" aparecia sem função. Com a nova proposta, o usuário consegue saber onde está e não vê controles inúteis.</div>
+<div class="frase"><b>Dashboard.</b> Eu reorganizei a tela com o cumprimento em destaque, quatro indicadores, ações rápidas e eventos, porque, no site original, todos os blocos tinham o mesmo peso. Com a nova proposta, o usuário consegue identificar em segundos a média, as pendências e o próximo prazo.</div>
+<div class="frase"><b>Notas.</b> Eu troquei o filtro de lista suspensa por botões segmentados e destaquei notas de 9 ou mais (dourado) e abaixo de 8 (rosa, sempre com texto) porque, no site original, todas as notas pareciam iguais. Com a nova proposta, o usuário consegue ver rapidamente onde vai bem e onde precisa de atenção.</div>
+<div class="frase"><b>Disciplinas.</b> Eu incluí a disciplina que faltava (Arquitetura de Computadores), uma barra de progresso com valor acessível e um estado vazio na busca porque, no site original, a lista estava incompleta e a busca sem resultado deixava a área em branco. Com a nova proposta, o usuário consegue ver toda a grade e entende quando a busca não achou nada.</div>
+<div class="frase"><b>Matrícula.</b> Eu criei uma etapa de confirmação, um limite de 32 créditos com aviso e a sinalização de choque de horário e de últimas vagas porque, no site original, o aluno via "sucesso" sem revisar nada. Com a nova proposta, o usuário consegue conferir o que escolheu e só então confirmar, com o botão desabilitado quando a escolha é inválida.</div>
+<div class="frase"><b>Perfil.</b> Eu adicionei validação por campo (nome, e-mail, telefone com DDD e cidade), mensagens de erro junto do campo e botões que só ativam quando há alteração porque, no site original, qualquer valor era aceito. Com a nova proposta, o usuário consegue corrigir o erro na hora e descartar mudanças com segurança.</div>
+<div class="frase"><b>Notificações.</b> Eu fiz o painel ocupar a largura da tela no celular e marcar de fato como lidas (com contador no sino) porque, no site original, a largura era fixa e o botão só fechava o painel. Com a nova proposta, o usuário consegue ler no celular e saber o que ainda não viu.</div>
+<div class="frase"><b>Dados.</b> Eu passei a calcular a média das notas e ajustei as datas para o semestre 2026.2 porque, no site original, a média exibida não batia com as notas. Com a nova proposta, o usuário consegue confiar nos números.</div>
+
+<h3>Antes e depois em telas-chave</h3>
+<div class="par">
+  <figure><span class="tag a">Antes</span><img src="img/antes-desktop-matricula.png" alt="Matrícula original"><figcaption>Matrícula original: sem créditos por disciplina, sem limite, sem revisão.</figcaption></figure>
+  <figure><span class="tag d">Depois</span><img src="img/depois-desktop-matricula.png" alt="Matrícula redesenhada"><figcaption>Matrícula redesenhada: créditos, vagas, limite 24 / 32 e botão que só ativa com escolha válida.</figcaption></figure>
+</div>
+<div class="par">
+  <figure><span class="tag a">Antes</span><img src="img/antes-desktop-notas.png" alt="Notas original"><figcaption>Notas original: sem destaque entre notas altas e baixas.</figcaption></figure>
+  <figure><span class="tag d">Depois</span><img src="img/depois-desktop-notas.png" alt="Notas redesenhada"><figcaption>Notas redesenhada: filtro segmentado, indicadores e destaque por faixa de nota.</figcaption></figure>
+</div>
+<div class="par">
+  <figure><img src="img/depois-matricula-confirmacao.png" alt="Etapa de confirmação da matrícula"><figcaption>Nova etapa de confirmação: revisão das disciplinas e do total de créditos antes de concluir.</figcaption></figure>
+  <figure><img src="img/depois-perfil-validacao.png" alt="Validação do perfil"><figcaption>Validação do perfil: mensagem de erro junto de cada campo inválido.</figcaption></figure>
+</div>
+
+<h2><span>5</span>Layout responsivo</h2>
+<p>O layout foi pensado em três larguras, reorganizando o conteúdo (e não apenas reduzindo): <strong>computador</strong> (menu lateral fixo e grades de 2 a 4 colunas), <strong>tablet</strong> (grades de 2 colunas e menu em gaveta) e <strong>celular</strong> (uma coluna, navegação inferior com 5 telas e informações de créditos e vagas visíveis dentro de cada cartão).</p>
+<div class="par mob">
+  <figure><span class="tag a">Antes</span><img src="img/antes-mobile-dashboard.png" alt="Celular original"><figcaption>Original: 4 de 5 telas.</figcaption></figure>
+  <figure><span class="tag d">Depois</span><img src="img/depois-mobile-dashboard.png" alt="Celular redesenhado"><figcaption>Redesign: 5 de 5 telas.</figcaption></figure>
+  <figure><span class="tag d">Depois</span><img src="img/depois-mobile-matricula.png" alt="Matrícula no celular"><figcaption>Matrícula com créditos e vagas visíveis.</figcaption></figure>
+</div>
+<div class="par mob">
+  <figure><img src="img/depois-mobile-notificacoes.png" alt="Notificações no celular"><figcaption>Notificações em largura total.</figcaption></figure>
+  <figure><img src="img/depois-mobile-menu.png" alt="Menu no celular"><figcaption>Menu em gaveta com fundo escurecido.</figcaption></figure>
+</div>
+
+<h2><span>6</span>Acessibilidade e usabilidade</h2>
+<ul>
+  <li><strong>Contraste:</strong> no modo escuro, texto principal 17,80 : 1; auxiliar 8,83 : 1 e 6,32 : 1; botão dourado com texto escuro 5,75 a 10,97 : 1 (do início ao fim do gradiente); alerta 7,20 : 1. No modo claro, todos os tons de texto também ficam acima de 4,5 : 1 (de 4,96 : 1 a 18,32 : 1, conforme a tabela da seção 3).</li>
+  <li><strong>Cor nunca sozinha:</strong> situação, urgência e erro sempre aparecem com texto ou ícone, além da cor.</li>
+  <li><strong>Teclado:</strong> foco dourado visível em todos os controles, link "Pular para o conteúdo", Esc fecha menu, painéis e a janela de confirmação, e o foco entra na janela ao abrir.</li>
+  <li><strong>Leitor de tela:</strong> ícones decorativos ocultos, rótulos em todos os botões de ícone, <code>aria-current</code> na página atual, <code>role="alert"</code> nos erros, <code>role="status"</code> nos avisos.</li>
+  <li><strong>Toque:</strong> alvos de pelo menos 44 px.</li>
+  <li><strong>Movimento:</strong> as animações respeitam a preferência "reduzir movimento" do sistema.</li>
+</ul>
+
+<h2><span>7</span>Funcionalidades mantidas</h2>
+<p>Todas as funcionalidades do original foram preservadas: as 5 telas, seletor de semestre, notificações, menu do perfil, busca de disciplinas, filtro de notas, seleção de disciplinas na matrícula, perfil editável, avisos (toasts) e dados de demonstração prontos para serem ligados a uma API. Os dados continuam fictícios, como no original.</p>
+
+<h2><span>8</span>Verificações realizadas</h2>
+<ul>
+  <li><strong>Instalação e build do zero:</strong> <code>npm install</code> (134 pacotes) e <code>npm run build</code> (checagem de tipos e empacotamento) sem erros.</li>
+  <li><strong>Execução no navegador:</strong> as 5 telas abertas, sem erro de página.</li>
+  <li><strong>Sem rolagem horizontal</strong> em 1440, 820, 390 e 320 px (e no celular nos dois modos).</li>
+  <li><strong>Alternância de tema:</strong> o botão troca o tema, avisa a mudança, mantém a escolha após recarregar a página e tem 44 × 44 px no celular; o diálogo de confirmação, o formulário com erro e o celular foram conferidos no modo claro.</li>
+  <li><strong>Fluxos testados:</strong> limite de créditos (3 disciplinas bloqueiam o botão), confirmação da matrícula, Esc na janela, validação do perfil (e-mail e telefone inválidos geram os dois erros), busca sem resultado, menu e notificações no celular.</li>
+</ul>
+<div class="callout"><strong>Limites desta entrega.</strong> O site é um front-end de demonstração sem servidor. O alerta de choque de horário existe no código, mas os dados de demonstração não têm choques, então não aparece na tela. O arquivo do Figma citado no guia da disciplina não faz parte desta entrega; o redesign foi feito diretamente em código.</div>
+
+<h2><span>9</span>Como executar</h2>
+<ol>
+  <li>Instale o Node.js (versão 18 ou superior).</li>
+  <li>Na pasta <code>educonnect-premium</code>, rode <code>npm install</code>.</li>
+  <li>Para desenvolver: <code>npm run dev</code> e abra o endereço mostrado.</li>
+  <li>Para gerar a versão final: <code>npm run build</code> (saída em <code>dist/</code>) e, para visualizar, <code>npm run preview</code>.</li>
+</ol>
+
+<h3>Estrutura do projeto</h3>
+<table>
+  <tr><th>Arquivo</th><th>Função</th></tr>
+  <tr><td><code>src/App.tsx</code></td><td>Estado geral, navegação entre telas, avisos</td></tr>
+  <tr><td><code>src/data.ts</code></td><td>Dados de demonstração e funções de cálculo</td></tr>
+  <tr><td><code>src/components/Layout.tsx</code></td><td>Menu lateral, cabeçalho, notificações, navegação do celular, aviso</td></tr>
+  <tr><td><code>src/components/ui.tsx</code></td><td>Componentes reutilizáveis (cartão de indicador, selo, progresso, avatar, estado vazio)</td></tr>
+  <tr><td><code>src/pages/*.tsx</code></td><td>As 5 telas: Dashboard, Notas, Disciplinas, Matrícula e Perfil</td></tr>
+  <tr><td><code>src/index.css</code> e <code>tailwind.config.js</code></td><td>Tokens visuais (cores, sombras, animações, utilitários)</td></tr>
+</table>
+
+<footer>Documento do redesign do EduConnect · todos os números deste documento foram medidos no projeto (contrastes calculados pela fórmula da WCAG; testes feitos no navegador).</footer>
+</main>
+</body>
+</html>
